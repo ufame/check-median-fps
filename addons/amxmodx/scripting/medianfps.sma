@@ -52,6 +52,7 @@ ResetFpsData(id) {
 
 public OnPlayerPreThink(const id) {
   new Float: game_time = get_gametime();
+  new currentIndex = PlayerData[id][fps_current_index];
  
   // Если значение current_index == -1, значит мы еще не считали фпс для этого игрока.
   if (PlayerData[id][fps_current_index] == -1) {
@@ -60,17 +61,15 @@ public OnPlayerPreThink(const id) {
     PlayerData[id][fps_start_time] = game_time;
   }
   else {
-    new currentIndex = PlayerData[id][fps_current_index];
-
-    PlayerData[id][fps_values][currentIndex]++
+    PlayerData[id][fps_values][currentIndex]++;
  
     if ((game_time - PlayerData[id][fps_start_time]) >= 1.0) {
-      PlayerData[id][fps_current_index]++;
-      PlayerData[id][fps_start_time] = game_time;
-
-      if (PlayerData[id][fps_current_index] == 9) {
+      if (currentIndex == 9) {
         CheckMedianFPS(id);
         ResetFpsData(id);
+      } else {
+        PlayerData[id][fps_current_index]++;
+        PlayerData[id][fps_start_time] = game_time;
       }
     }
   }
@@ -86,7 +85,7 @@ CheckMedianFPS(id) {
     (PlayerData[id][fps_values][4] + PlayerData[id][fps_values][5] + PlayerData[id][fps_values][6]) / 3 - 1;
 
   if (median_fps > hfc_max_fps) {
-    server_cmd("kick #%d ^"You fps is %d. Max %d.^"", median_fps, hfc_max_fps);
+    server_cmd("kick #%d ^"You fps is %d. Max %d.^"", get_user_userid(id), median_fps, hfc_max_fps);
 
     if (hfc_chat_info)
       client_print_color(0, print_team_default, "%L", LANG_PLAYER, "MedianFps_PlayerKicked", id, hfc_max_fps);

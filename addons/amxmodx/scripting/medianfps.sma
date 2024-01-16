@@ -14,7 +14,7 @@ new bool: hfc_chat_info;
 new bool: hfc_log_info;
 
 public plugin_init() {
-  register_plugin("Median fps", "1.0.1", "the_hunter");
+  register_plugin("Median fps", "1.0.2", "the_hunter");
   RegisterHookChain(RG_CBasePlayer_PreThink, "OnPlayerPreThink");
 
   register_dictionary("medianfps.txt");

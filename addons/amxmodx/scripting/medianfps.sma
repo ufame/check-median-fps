@@ -11,6 +11,7 @@ new PlayerData[MAX_PLAYERS + 1][FpsData];
 
 new hfc_max_fps;
 new bool: hfc_chat_info;
+new bool: hfc_log_info;
 
 public plugin_init() {
   register_plugin("Median fps", "1.0.1", "the_hunter");
@@ -36,6 +37,16 @@ public plugin_init() {
       "Print kicked player in chat"
     ),
     hfc_chat_info
+  );
+
+  bind_pcvar_num(
+    create_cvar(
+      "hfc_log_info",
+      "1",
+      _,
+      "Print kicked player in log"
+    ),
+    hfc_log_info
   );
 
   AutoExecConfig(true, "medianfps");
@@ -89,5 +100,8 @@ CheckMedianFPS(id) {
 
     if (hfc_chat_info)
       client_print_color(0, print_team_default, "%L", LANG_PLAYER, "MedianFps_PlayerKicked", id, hfc_max_fps);
+
+    if (hfc_log_info)
+      log_to_file("median_fps_checker.log", "Player <%N> has been kicked for high FPS (%d).", id, median_fps);
   }
 }

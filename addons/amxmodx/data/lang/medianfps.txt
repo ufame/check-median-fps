@@ -1,5 +1,5 @@
 [ru]
-MedianFps_PlayerKicked = ^1[^4FPS^1] Игрок ^3%s^1 кикнут за FPS > ^4%d^1.
+MedianFps_PlayerKicked = ^1[^4FPS^1] Игрок ^3%n^1 кикнут за FPS > ^4%d^1.
 
 [en]
-MedianFps_PlayerKicked = ^1[^4FPS^1] Player ^3%s^1 has been kicked for FPS > ^4%d^1.
+MedianFps_PlayerKicked = ^1[^4FPS^1] Player ^3%n^1 has been kicked for FPS > ^4%d^1.
